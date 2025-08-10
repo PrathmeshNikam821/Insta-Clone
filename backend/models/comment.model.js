@@ -11,10 +11,10 @@ const commentSchema = new mongoose.Schema({
     required: true,
   },
   post: {
-    type: mongoose.Schema.Types.ObjectId.apply,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Post",
     required: true,
   },
 });
 
-export default Comment = mongoose.model("Comment", commentSchema);
+export default commentSchema = mongoose.model("Comment", commentSchema);
