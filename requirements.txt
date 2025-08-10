@@ -6,3 +6,5 @@ bcryptjs
 cookie-parser
 cors
 dotenv
+datauri
+cloudinary
