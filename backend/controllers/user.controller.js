@@ -5,6 +5,8 @@ import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
 
 export const register = async (req, res) => {
+  console.log("register route hit");
+
   try {
     const { username, email, password } = req.body;
     if (!username || !email || !password) {
@@ -60,8 +62,7 @@ export const login = async (req, res) => {
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return res.status(401).json({
-        message:
-          "No uesr found ! please check email id or password is proper or do register ! ",
+        message: "No password match ",
         success: false,
       });
     }
@@ -111,7 +112,7 @@ export const logout = async (req, res) => {
 export const getProfile = async (req, res) => {
   try {
     const userId = req.params.id;
-    let user = User.findById(userId);
+    let user = await User.findById(userId).select("-password");
 
     return res.status(200).json({
       user,
@@ -135,7 +136,7 @@ export const editProfile = async (req, res) => {
       cloudResponse = await cloudinary.uploader.upload(fileUri);
     }
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userId).select("-password");
     if (!user) {
       return res.status(404).json({
         message: "User not found",

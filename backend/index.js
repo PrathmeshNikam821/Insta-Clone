@@ -24,18 +24,17 @@ app.get("/", (req, res) => {
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 const corsOptions = {
   origin: "http://localhost:5173",
-  Credentials: true,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
 
 //routes from controllers -->APIs
 
-app.use("/api/v1/user", userRouter);
-// "http://localhost:8000/api/v1/user/register"
+app.use("/user", userRouter);
 
 app.listen(PORT, () => {
   connectDB();
